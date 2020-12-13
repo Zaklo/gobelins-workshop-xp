@@ -1,3 +1,4 @@
+
 import { Object3D } from 'three'
 
 export default class Venus {
@@ -16,7 +17,7 @@ export default class Venus {
       let textureToShow = Math.floor(Math.random() * Math.floor(6))
       this.setTexture(textureToShow)
 
-      console.log(textureToShow)
+      // console.log(textureToShow)
     }, 500)
   }
   createVenus() {
