@@ -3,6 +3,8 @@ import { AxesHelper, Object3D } from 'three'
 import AmbientLightSource from './AmbientLight'
 import PointLightSource from './PointLight'
 import Venus from './Venus'
+import Mouser from '../Tools/Mouse'
+import Mouse from '../Tools/Mouse'
 
 export default class World {
   constructor(options) {
@@ -26,6 +28,7 @@ export default class World {
   init() {
     this.setAmbientLight()
     this.setPointLight()
+    this.setMouse()
     this.setVenus()
   }
   setLoader() {
@@ -71,7 +74,13 @@ export default class World {
     this.venus = new Venus({
       time: this.time,
       assets: this.assets,
+      debug: this.debugFolder,
+      mouse: this.mouse
     })
     this.container.add(this.venus.container)
+  }
+
+  setMouse() {
+    this.mouse = new Mouse()
   }
 }
