@@ -3,7 +3,6 @@ import { AxesHelper, Object3D } from 'three'
 import AmbientLightSource from './AmbientLight'
 import PointLightSource from './PointLight'
 import Venus from './Venus'
-import Mouser from '../Tools/Mouse'
 import Mouse from '../Tools/Mouse'
 
 export default class World {
