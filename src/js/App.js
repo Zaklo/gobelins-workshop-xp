@@ -4,6 +4,7 @@ import * as dat from 'dat.gui'
 import Sizes from '@tools/Sizes'
 import Time from '@tools/Time'
 import Assets from '@tools/Loader'
+import Scroll from "./Tools/Scroll";
 
 import Camera from './Camera'
 import World from '@world/index'
@@ -17,6 +18,7 @@ export default class App {
     this.time = new Time()
     this.sizes = new Sizes()
     this.assets = new Assets()
+    this.wheel = new Scroll()
 
     this.setConfig()
     this.setRenderer()
@@ -48,6 +50,11 @@ export default class App {
     // Set RequestAnimationFrame with 60ips
     this.time.on('tick', () => {
       this.renderer.render(this.scene, this.camera.camera)
+
+      this.wheel.on('wheelMove', ()=>{
+          this.MoveCamera()
+      })
+
     })
   }
   setCamera() {
@@ -74,5 +81,10 @@ export default class App {
     if (window.location.hash === '#debug') {
       this.debug = new dat.GUI({ width: 420 })
     }
+  }
+
+  MoveCamera() {
+    this.camera.camera.position.z += this.wheel.getDelta() * 0.003 ;
+
   }
 }
