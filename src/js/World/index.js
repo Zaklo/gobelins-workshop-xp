@@ -1,9 +1,11 @@
-import { AxesHelper, Object3D } from 'three'
+import {AxesHelper, Object3D, CatmullRomCurve3, Vector2, BufferGeometry, LineBasicMaterial, Line, Vector3, FontLoader, TextGeometry} from 'three'
 
 import AmbientLightSource from './AmbientLight'
 import PointLightSource from './PointLight'
 import Venus from './Venus'
 import Mouse from '../Tools/Mouse'
+
+const textVenus = ['1','2','3','4','5','6']
 
 export default class World {
   constructor(options) {
@@ -28,7 +30,28 @@ export default class World {
     this.setAmbientLight()
     this.setPointLight()
     this.setMouse()
-    this.setVenus()
+    for (let i = 0; i < 6; i++) {
+      this.setVenus(i,textVenus[i])
+    }
+
+
+    const curve = new CatmullRomCurve3( [
+      new Vector3( -10, -0, -5 ),
+      new Vector3( -5, 5, -10),
+      new Vector3( 0, 0, -15 ),
+      new Vector3( 5, -5, -20 ),
+      new Vector3( 10, 0, -25 )
+    ] );
+
+    const points = curve.getPoints( 50 );
+    const geometry = new BufferGeometry().setFromPoints( points );
+
+    const material = new LineBasicMaterial( { color : 'white' } );
+
+    // Create the final object to add to the scene
+    const splineObject = new Line( geometry, material );
+
+    this.container.add(splineObject)
   }
   setLoader() {
     this.loadDiv = document.querySelector('.loadScreen')
@@ -69,12 +92,14 @@ export default class World {
     })
     this.container.add(this.light.container)
   }
-  setVenus() {
+  setVenus(position,text) {
     this.venus = new Venus({
       time: this.time,
       assets: this.assets,
       debug: this.debugFolder,
-      mouse: this.mouse
+      mouse: this.mouse,
+      position : position,
+      text : text
     })
     this.container.add(this.venus.container)
   }
@@ -82,4 +107,5 @@ export default class World {
   setMouse() {
     this.mouse = new Mouse()
   }
+
 }

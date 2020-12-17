@@ -5,12 +5,9 @@ export default class Scroll extends EventEmitter {
         // Get parent methods
         super()
         this.delta = 0
-
         // Set up
         document.addEventListener('wheel', (event) => {
-
             this.wheelMove(event)
-
         })
     }
 
